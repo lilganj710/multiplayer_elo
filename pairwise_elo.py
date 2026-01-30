@@ -33,6 +33,9 @@ def update_ratings(
     winner_matrix = get_winner_matrix(result)
     update_terms = winner_matrix - expected_scores
     np.fill_diagonal(update_terms, 0)
-    average_updates = np.mean(update_terms, axis=-1)
+    average_updates = (
+        len(result)/(len(result)-1)
+        * np.mean(update_terms, axis=-1)
+    )
     new_ratings = old_ratings + K * average_updates
     return new_ratings
